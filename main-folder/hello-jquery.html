@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hello Jquery</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+</head>
+<body>
+
+    <form>
+        <input type="checkbox" name="buah" value="Apel"/>Apel<br/>
+        <input type="checkbox" name="buah" value="Mangga"/>Mangga<br/>
+        <input type="checkbox" name="buah" value="Anggur"/>Anggur<br/>
+
+
+        <select id="mobil">
+            <option class="m" value="Lamborghini"/>Lamborghini
+            <option class="m" value="Ferrari"/>Ferrari
+            <option class="m" value="Buggati"/>Buggati
+        </select><br/>
+
+        <input type="radio" name="gender" value="Male"/>Male<br/>
+        <input type="radio" name="gender" value="Female"/>Female<br/>
+
+
+        <input type="submit" value="get result for buah "/>
+        <br/>
+        <input type="submit" value="get result for single selected mobil"/>
+        <br/>
+        <input type="reset" value="Refresh forms"/>
+        <br/>
+
+        <input type="submit" value="get all results"/>
+    </form>
+
+    <div id="result-buah" >
+
+    </div>
+
+    <div id="result-mobil" >
+
+    </div>
+
+    <div id="result-gender">
+
+    </div>
+
+</body>
+    <script>
+        $(document).ready(function(){
+
+            $('form input[type=submit]:eq(0)').click(function(){
+
+                var a = [];
+
+                $(':checkbox:checked').map(function(){
+                   a.push($(this).val());
+                   return a;
+                }).get().join(',');
+
+               if(jQuery.isEmptyObject(a)){
+                  $('#result-buah').text('anda belum memilih buah');
+               }else{
+                  $('#result-buah').text(a);
+               }
+
+
+                event.preventDefault();
+            });
+
+            var gender ;
+
+
+            $('form :submit:eq(2)').click(function () {
+
+
+                var checkVal = [];
+                var radioVal = $('form :radio:checked').val();
+                var selectVal = $('form select option:selected').val();
+
+                $('form :checkbox:checked').map(function () {
+                   checkVal.push($(this).val());
+                   return checkVal;
+                }).get().join(',');
+
+                $('#result-buah').text(checkVal);
+                $('#result-mobil').text(selectVal);
+                $('#result-gender').text(radioVal);
+
+                event.preventDefault();
+            });
+
+            $('form :radio').change(function () {
+              $('form :radio:checked').each(function(){
+                 $('#result-gender').text($(this).val());
+              });
+            }).change();
+
+
+            $('form input:reset').click(function(){
+               $('#result-buah').text('');
+               $('#result-mobil').text('');
+               $('#result-gender').text('');
+            });
+
+            $('form :submit:eq(1)').click(function(){
+               var b = $('#mobil option:selected').val();
+
+               $('#result-mobil').text(b);
+
+
+
+
+               event.preventDefault();
+            });
+
+
+
+
+        });
+    </script>
+
+</html>
